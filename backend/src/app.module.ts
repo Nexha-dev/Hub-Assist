@@ -9,10 +9,13 @@ import { ContactModule } from './contact/contact.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { StellarModule } from './stellar/stellar.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import { validationSchema } from './config/validation.schema';
 import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middleware';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -35,8 +38,13 @@ import { HttpLoggerMiddleware } from './common/middlewares/http-logger.middlewar
     AttendanceModule,
     BookingsModule,
     StellarModule,
+    DashboardModule,
   ],
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+  providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
