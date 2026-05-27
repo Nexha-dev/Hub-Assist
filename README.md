@@ -1,5 +1,8 @@
 # HubAssist
 
+[![CI](https://github.com/Hub-Assist/Hub-Assist/actions/workflows/ci.yml/badge.svg)](https://github.com/Hub-Assist/Hub-Assist/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Hub-Assist/Hub-Assist/branch/main/graph/badge.svg)](https://codecov.io/gh/Hub-Assist/Hub-Assist)
+
 > A Comprehensive Coworking and Workspace Management System — powered by [Stellar](https://stellar.org)
 
 HubAssist is a full-stack monorepo platform designed to streamline **coworking and workspace management** for hubs, shared offices, and enterprise workspaces. It combines a modern web frontend, a robust REST API backend, and on-chain smart contracts deployed on the **Stellar** blockchain via **Soroban** — enabling trustless payments, membership tokens, and access control.
@@ -182,6 +185,33 @@ npm run start:dev
 cd frontend
 npm run dev
 # App available at http://localhost:3000
+```
+
+---
+
+## Docker (Local Development)
+
+The entire stack can be started with Docker Compose:
+
+```bash
+# Copy and configure environment
+cp backend/.env.example backend/.env
+
+# Start all services (postgres + backend + frontend)
+docker compose up
+```
+
+`docker-compose.override.yml` is applied automatically in development — it mounts source directories into the containers for hot-reload.
+
+| Service    | URL                        |
+|------------|----------------------------|
+| Frontend   | http://localhost:3000       |
+| Backend    | http://localhost:3001       |
+| PostgreSQL | localhost:5432              |
+
+To run only the database (e.g. for local `npm run start:dev`):
+```bash
+docker compose up postgres
 ```
 
 ---
